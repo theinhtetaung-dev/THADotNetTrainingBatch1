@@ -8,4 +8,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\THADotNetTrainingBatch1-LINQ-Data\THADotNetTrainingBatch1-LINQ-Data.csproj" />
+  </ItemGroup>
+
 </Project>
