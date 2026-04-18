@@ -25,16 +25,23 @@ else
 {
     Console.WriteLine("There is no number greater than 50");
 }
-    var filterNums = data.Where(x => x >= val).ToList();
+List<int> ints = new List<int>() { 1, 2, 1, 2, 3, 4, 3, 4, 3, 6 };
+var skipping = ints.Skip(3).Take(2);
+var total = ints.Sum();
+var avg = ints.Average();   
+Console.WriteLine("Sum and Avg : " + total + " , " + avg);
+Console.WriteLine("Skipping : " + String.Join(", ", skipping));
+var noDuplicate = ints.Distinct();
+var filterNums = data.Where(x => x >= val).ToList();
 var evenData = data.Where(x => x % 2 == 0).ToList();
 var oddData = data.Where( x=> x % 2 != 0).ToList();
+Console.WriteLine("Distinct : " + String.Join(", ", noDuplicate));
 Console.WriteLine("Numbers : " + String.Join(", ", data));
 Console.WriteLine("Numbers in Descending Order : " + String.Join(", ", ascorder));
 Console.WriteLine("Min and Max Number : " + minNum + " , " + maxNum);
 Console.WriteLine("Number Filtered : " + String.Join(" , ", filterNums));
 Console.WriteLine("Odd Numbers : " + String.Join(", ", oddData));
 Console.WriteLine("Even Numbers : " + String.Join(", ", evenData));
-
 
 
 Console.ReadLine();
