@@ -25,6 +25,7 @@ foreach (var group in groupedByDepartment)
 }
 
 
+
 var sortedEmployees = data.OrderBy(x => x.Department)
                             .ThenByDescending(x => x.Salary)
                             .ToList();
