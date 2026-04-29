@@ -9,7 +9,7 @@ var groupedByDepartment = data.GroupBy(x => x.Department)
                                 .Select(x => new
                                 {
                                     Department = x.Key,
-                                    Employees = x.OrderByDescending(e => e.Name).ToList()
+                                    Employees = x.OrderByDescending(e => e.Salary).ToList()
                                 });
 
 foreach (var group in groupedByDepartment)
@@ -24,9 +24,10 @@ foreach (var group in groupedByDepartment)
     }
 }
 
-var sortedEmployees = data.OrderBy(x => x.Department)
-                            .ThenByDescending(x => x.Salary)
-                            .ToList();
+
+//var sortedEmployees = data.OrderBy(x => x.Department)
+//                            .ThenByDescending(x => x.Salary)
+//                            .ToList();
 
 //Console.WriteLine($"{"ID",-5} | {"Name",-15} | {"Department",-15} | {"Salary",-10}");
 //Console.WriteLine(new string('-', 55));
@@ -35,3 +36,4 @@ var sortedEmployees = data.OrderBy(x => x.Department)
 //{
 //    Console.WriteLine($"{emp.Id,-5} | {emp.Name,-15} | {emp.Department,-15} | {emp.Salary,-10:N0}");
 //}
+
