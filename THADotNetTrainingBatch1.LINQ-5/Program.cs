@@ -25,15 +25,15 @@ foreach (var group in groupedByDepartment)
 }
 
 
-//var sortedEmployees = data.OrderBy(x => x.Department)
-//                            .ThenByDescending(x => x.Salary)
-//                            .ToList();
+var sortedEmployees = data.OrderBy(x => x.Department)
+                            .ThenByDescending(x => x.Salary)
+                            .ToList();
 
-//Console.WriteLine($"{"ID",-5} | {"Name",-15} | {"Department",-15} | {"Salary",-10}");
-//Console.WriteLine(new string('-', 55));
+Console.WriteLine($"{"ID",-5} | {"Name",-15} | {"Department",-15} | {"Salary",-10}");
+Console.WriteLine(new string('-', 55));
 
-//foreach (var emp in sortedEmployees)
-//{
-//    Console.WriteLine($"{emp.Id,-5} | {emp.Name,-15} | {emp.Department,-15} | {emp.Salary,-10:N0}");
-//}
+foreach (var emp in sortedEmployees)
+{
+    Console.WriteLine($"{emp.Id,-5} | {emp.Name,-15} | {emp.Department,-15} | {emp.Salary,-10:N0}");
+}
 
