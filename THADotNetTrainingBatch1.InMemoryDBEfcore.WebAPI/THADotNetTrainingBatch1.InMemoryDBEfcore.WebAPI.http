@@ -1,0 +1,6 @@
+@THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI_HostAddress = http://localhost:5195
+
+GET {{THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

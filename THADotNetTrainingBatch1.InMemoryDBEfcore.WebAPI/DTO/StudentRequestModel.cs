@@ -1,0 +1,25 @@
+﻿namespace THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.DTO;
+
+public class StudentRequestModel
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public string Email { get; set; } = null!;
+
+}
+
+public class StudentResModel
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string Email { get; set; } = null!;
+}
+
+public class StudentListResModel
+{
+    public List<StudentResModel> Students { get; set; }
+    public PageSettingModel pageSetting { get; set; }
+    
+}
