@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +19,6 @@ public class StudentController : ControllerBase
         _context = context;
     }
 
-
     [HttpGet("all")]
     public async Task<IActionResult> GetStudents()
     {
@@ -28,13 +27,20 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("list")]
-    public async Task<IActionResult> GetStudentList([FromQuery] int pageNo,[FromQuery] int pageSize)
+    public async Task<IActionResult> GetStudentList([FromQuery] int pageNo = 1, [FromQuery] int pageSize = 10)
     {
+        if (pageNo <= 0 || pageSize <= 0)
+        {
+            return BadRequest("Page number and page size must be greater than zero.");
+        }
 
-        var students = await _context.Students.Skip((pageNo - 1) * pageSize).Take(pageSize).ToListAsync();
+        var students = await _context.Students
+            .Skip((pageNo - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
         int totalRow = await _context.Students.CountAsync();
-        int pageCount = totalRow / pageSize;
-        if (totalRow % pageSize > 0) pageCount++;
+        int pageCount = (int)Math.Ceiling((double)totalRow / pageSize);
 
         StudentListResModel resModel = new StudentListResModel()
         {
@@ -45,7 +51,7 @@ public class StudentController : ControllerBase
                 Email = s.Email
             }).ToList(),
 
-            pageSetting = new PageSettingModel
+            PageSetting = new PageSettingModel
             {
                 PageNo = pageNo,
                 PageSize = pageSize,
@@ -53,28 +59,26 @@ public class StudentController : ControllerBase
             }
         };
         return Ok(resModel);
-
     }
+
     [HttpPost]
     public async Task<IActionResult> CreateStudent(StudentRequestModel reqmodel)
     {
-        var Student = new Student
+        var student = new Student
         {
-            Id = reqmodel.Id,
             Name = reqmodel.Name,
             Email = reqmodel.Email
         };
 
-        await _context.Students.AddAsync(Student);
+        await _context.Students.AddAsync(student);
         await _context.SaveChangesAsync();
-        return Ok(Student);
+        return CreatedAtAction(nameof(GetStudentById), new { id = student.Id }, student);
     }
 
-    [HttpGet("detail")]
-
-    public IActionResult GetStudentById(StudentRequestModel requestModel)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetStudentById(int id)
     {
-        var student = _context.Students.FirstOrDefault(s => s.Id == requestModel.Id);
+        var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
 
         if (student == null)
         {
@@ -84,18 +88,33 @@ public class StudentController : ControllerBase
         return Ok(student);
     }
 
-    [HttpDelete]
-
-    public IActionResult DeleteStudent(int id)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateStudent(int id, StudentRequestModel reqmodel)
     {
-        var student = _context.Students.FirstOrDefault(s => s.Id == id);
+        var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
         if (student == null)
         {
             return NotFound();
         }
-        _context.Students.Remove(student);
-        _context.SaveChanges();
-        return NoContent();
+
+        student.Name = reqmodel.Name;
+        student.Email = reqmodel.Email;
+
+        await _context.SaveChangesAsync();
+        return Ok(student);
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteStudent(int id)
+    {
+        var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        _context.Students.Remove(student);
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
 }
