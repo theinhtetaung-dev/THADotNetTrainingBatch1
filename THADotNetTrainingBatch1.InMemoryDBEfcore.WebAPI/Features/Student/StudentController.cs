@@ -6,7 +6,7 @@ using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Database;
 using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.DTO;
 using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Model;
 
-namespace THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Controllers;
+namespace THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Features.Student;
 
 [Route("api/[controller]")]
 [ApiController]

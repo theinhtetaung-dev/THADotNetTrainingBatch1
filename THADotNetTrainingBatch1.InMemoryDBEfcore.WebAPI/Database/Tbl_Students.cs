@@ -1,6 +1,6 @@
-﻿namespace THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Model
+﻿namespace THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Database
 {
-    public class Student
+    public class Tbl_Students
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
