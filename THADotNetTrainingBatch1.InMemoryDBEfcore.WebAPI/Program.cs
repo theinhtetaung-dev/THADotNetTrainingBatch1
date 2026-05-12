@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Database;
+using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Features.Student;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(option => option.UseInMemoryDatabase("StudentDB"));
+builder.Services.AddScoped<StudentService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

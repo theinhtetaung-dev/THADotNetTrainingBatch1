@@ -13,17 +13,23 @@ namespace THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Features.Student;
 public class StudentController : ControllerBase
 {
     private readonly AppDbContext _context;
+    private readonly StudentService _service;
 
-    public StudentController(AppDbContext context)
+ 
+    public StudentController(AppDbContext context,StudentService service)
     {
         _context = context;
+        _service = service;
+
     }
 
     [HttpGet("all")]
     public async Task<IActionResult> GetStudents()
     {
-        var students = await _context.Students.ToListAsync();
-        return Ok(students);
+        var student = await _service.GetStudents();
+
+        if(student is null) return NotFound();
+        return Ok(student);
     }
 
     [HttpGet("list")]
@@ -34,52 +40,24 @@ public class StudentController : ControllerBase
             return BadRequest("Page number and page size must be greater than zero.");
         }
 
-        var students = await _context.Students
-            .Skip((pageNo - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+        var students = await _service.GetStudentList(pageNo, pageSize);
 
-        int totalRow = await _context.Students.CountAsync();
-        int pageCount = (int)Math.Ceiling((double)totalRow / pageSize);
+        if (students == null) return NotFound();
 
-        StudentListResModel resModel = new StudentListResModel()
-        {
-            Students = students.Select(s => new StudentResModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Email = s.Email
-            }).ToList(),
-
-            PageSetting = new PageSettingModel
-            {
-                PageNo = pageNo,
-                PageSize = pageSize,
-                PageCount = pageCount
-            }
-        };
-        return Ok(resModel);
+        return Ok(students);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateStudent(StudentRequestModel reqmodel)
     {
-        var student = new Student
-        {
-            Name = reqmodel.Name,
-            Email = reqmodel.Email
-        };
-
-        await _context.Students.AddAsync(student);
-        await _context.SaveChangesAsync();
+        var student = await _service.CreateStudent(reqmodel);
         return CreatedAtAction(nameof(GetStudentById), new { id = student.Id }, student);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetStudentById(int id)
     {
-        var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
-
+        var student = await _service.GetStudentById(id);
         if (student == null)
         {
             return NotFound();
@@ -91,30 +69,19 @@ public class StudentController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateStudent(int id, StudentRequestModel reqmodel)
     {
-        var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
+       var student = await _service.UpdateStudent(id, reqmodel);
         if (student == null)
         {
             return NotFound();
         }
-
-        student.Name = reqmodel.Name;
-        student.Email = reqmodel.Email;
-
-        await _context.SaveChangesAsync();
         return Ok(student);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteStudent(int id)
     {
-        var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
-        if (student == null)
-        {
-            return NotFound();
-        }
+        var isDeleted = await _service.DeleteStudent(id);
 
-        _context.Students.Remove(student);
-        await _context.SaveChangesAsync();
-        return NoContent();
+        return Ok("Deleted success!");
     }
 }

@@ -32,7 +32,8 @@ public class StudentService
         if (pageSize <= 0) pageSize = 10;
 
         int totalRow = await _db.Students.CountAsync();
-        int pageCount = (int)Math.Ceiling((double)totalRow / pageSize);
+        int pageCount = totalRow / pageSize;
+        if(totalRow % pageSize > 0) pageCount++;    
 
         var students = await _db.Students
             .Skip((pageNo - 1) * pageSize)
@@ -47,7 +48,13 @@ public class StudentService
 
         return new StudentListResModel
         {
-            Students = students,
+            Students = students.Select(x => new StudentResModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Email = x.Email
+            }).ToList(),
+
             PageSetting = new PageSettingModel
             {
                 PageNo = pageNo,
