@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Database;
+using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Features.Auth;
 using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Features.Student;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,30 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(option => option.UseInMemoryDatabase("StudentDB"));
 builder.Services.AddScoped<StudentService>();
+builder.Services.AddScoped<AuthService>();
+var jwtKey = builder.Configuration["Jwt:Key"]!;
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(jwtKey)
+        )
+    };
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,5 +54,37 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Seed data
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    if (!context.Users.Any())
+    {
+        context.Users.AddRange(new Tbl_User[]
+        {
+            new Tbl_User { UserName = "admin", Password = "password123", Role = "admin" },
+            new Tbl_User { UserName = "staff", Password = "password123", Role = "staff" }
+        });
+    }
+
+    if (!context.Students.Any())
+    {
+        context.Students.AddRange(new Tbl_Students[]
+        {
+            new Tbl_Students { Name = "Alice", Email = "alice@example.com" },
+            new Tbl_Students { Name = "Bob", Email = "bob@example.com" },
+            new Tbl_Students { Name = "Charlie", Email = "charlie@example.com" },
+            new Tbl_Students { Name = "David", Email = "david@example.com" },
+            new Tbl_Students { Name = "Emma", Email = "emma@example.com" },
+            new Tbl_Students { Name = "Frank", Email = "frank@example.com" },
+            new Tbl_Students { Name = "Grace", Email = "grace@example.com" },
+            new Tbl_Students { Name = "Henry", Email = "henry@example.com" },
+            new Tbl_Students { Name = "Ivy", Email = "ivy@example.com" },
+            new Tbl_Students { Name = "Jack", Email = "jack@example.com" }
+        });
+    }
+    context.SaveChanges();
+}
 
 app.Run();

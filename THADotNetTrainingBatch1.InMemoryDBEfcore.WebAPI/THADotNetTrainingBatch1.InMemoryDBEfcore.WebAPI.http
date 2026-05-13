@@ -1,16 +1,50 @@
 @HostAddress = http://localhost:5195
 
+### Login as Admin
+# @name adminLogin
+POST {{HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "password123"
+}
+
+###
+
+@adminToken = {{adminLogin.response.body.accessToken}}
+
+### Login as Staff
+# @name staffLogin
+POST {{HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "staff",
+  "password": "password123"
+}
+
+###
+
+@staffToken = {{staffLogin.response.body.accessToken}}
+
+### Get All Students (Admin)
+GET {{HostAddress}}/api/student/all
+Authorization: Bearer {{adminToken}}
+Accept: application/json
+
+### Get All Students (Staff)
+GET {{HostAddress}}/api/student/all
+Authorization: Bearer {{staffToken}}
+Accept: application/json
+
+### Get All Students (No Token - Expect 401)
 GET {{HostAddress}}/api/student/all
 Accept: application/json
 
-###
-
-GET {{HostAddress}}/api/student/list?pageNo=1&pageSize=5
-Accept: application/json
-
-###
-
+### Create Student (Admin)
 POST {{HostAddress}}/api/student
+Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
@@ -18,22 +52,32 @@ Content-Type: application/json
   "email": "john.doe@example.com"
 }
 
-###
-
-GET {{HostAddress}}/api/student/1
-Accept: application/json
-
-###
-
-PUT {{HostAddress}}/api/student/1
+### Create Student (Staff - Expect 403)
+POST {{HostAddress}}/api/student
+Authorization: Bearer {{staffToken}}
 Content-Type: application/json
 
 {
-  "name": "John Updated",
-  "email": "john.updated@example.com"
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com"
 }
 
-###
+### Get Student by Id (Staff)
+GET {{HostAddress}}/api/student/1
+Authorization: Bearer {{staffToken}}
+Accept: application/json
 
+### Update Student (Admin)
+PUT {{HostAddress}}/api/student/1
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Alice Updated",
+  "email": "alice.updated@example.com"
+}
+
+### Delete Student (Admin)
 DELETE {{HostAddress}}/api/student/1
+Authorization: Bearer {{adminToken}}
 Accept: application/json

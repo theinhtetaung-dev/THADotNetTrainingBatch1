@@ -13,12 +13,10 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Student Table အတွက် Auto Increment
         modelBuilder.Entity<Tbl_Students>()
             .Property(s => s.Id)
             .ValueGeneratedOnAdd();
 
-        // User Table အတွက် Auto Increment
         modelBuilder.Entity<Tbl_User>()
             .Property(u => u.Id)
             .ValueGeneratedOnAdd();

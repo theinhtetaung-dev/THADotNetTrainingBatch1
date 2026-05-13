@@ -19,7 +19,6 @@ public class StudentService
         return await _db.Students
             .Select(s => new StudentResModel
             {
-                Id = s.Id,
                 Name = s.Name,
                 Email = s.Email
             })
@@ -40,7 +39,6 @@ public class StudentService
             .Take(pageSize)
             .Select(s => new StudentResModel
             {
-                Id = s.Id,
                 Name = s.Name,
                 Email = s.Email
             })
@@ -50,7 +48,6 @@ public class StudentService
         {
             Students = students.Select(x => new StudentResModel
             {
-                Id = x.Id,
                 Name = x.Name,
                 Email = x.Email
             }).ToList(),
@@ -71,7 +68,6 @@ public class StudentService
 
         return new StudentResModel
         {
-            Id = student.Id,
             Name = student.Name,
             Email = student.Email
         };
@@ -89,7 +85,6 @@ public class StudentService
 
         return new StudentResModel
         {
-            Id = student.Id,
             Name = student.Name,
             Email = student.Email
         };
@@ -107,7 +102,6 @@ public class StudentService
 
         return new StudentResModel
         {
-            Id = student.Id,
             Name = student.Name,
             Email = student.Email
         };
