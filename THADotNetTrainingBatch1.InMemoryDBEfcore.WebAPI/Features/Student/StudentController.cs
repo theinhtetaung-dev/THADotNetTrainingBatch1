@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Database;
 using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.DTO;
-using THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Model;
 using Microsoft.AspNetCore.Authorization;
 
 namespace THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.Features.Student;
@@ -56,7 +55,7 @@ public class StudentController : ControllerBase
     public async Task<IActionResult> CreateStudent(StudentRequestModel reqmodel)
     {
         var student = await _service.CreateStudent(reqmodel);
-        return CreatedAtAction(nameof(GetStudentById), new { id = student.Id }, student);
+        return CreatedAtAction(nameof(GetStudentById), student);
     }
 
     [HttpGet("{id}")]
