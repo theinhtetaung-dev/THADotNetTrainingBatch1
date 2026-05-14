@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11806.211 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THADotNetTrainingBatch1", "THADotNetTrainingBatch1\THADotNetTrainingBatch1.csproj", "{B1F3ACA4-06D3-481D-A0DE-6109EF76BAAB}"
 EndProject
@@ -76,6 +76,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestingProject", "TestingProject", "{427089B1-F93B-47BC-9C1C-8AB358C13299}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI", "THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI\THADotNetTrainingBatch1.InMemoryDBEfcore.WebAPI.csproj", "{09A1A213-F25B-4B1F-9C68-19E6F17A104B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THADotNetTrainingBatch1.SeriLog.ConsoleApp", "THADotNetTrainingBatch1.SeriLog.ConsoleApp\THADotNetTrainingBatch1.SeriLog.ConsoleApp.csproj", "{B00A29A7-4E3A-4944-90C2-937F065337F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -203,6 +205,10 @@ Global
 		{09A1A213-F25B-4B1F-9C68-19E6F17A104B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09A1A213-F25B-4B1F-9C68-19E6F17A104B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09A1A213-F25B-4B1F-9C68-19E6F17A104B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B00A29A7-4E3A-4944-90C2-937F065337F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00A29A7-4E3A-4944-90C2-937F065337F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00A29A7-4E3A-4944-90C2-937F065337F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00A29A7-4E3A-4944-90C2-937F065337F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -238,6 +244,7 @@ Global
 		{30182999-7461-4F86-AF85-9B7B8F9E837B} = {1E36AE29-856E-4086-9603-8A074400FA1B}
 		{605EDA4D-5220-4175-A7EB-66E3E690B96E} = {1E36AE29-856E-4086-9603-8A074400FA1B}
 		{09A1A213-F25B-4B1F-9C68-19E6F17A104B} = {384B72C6-E7AC-40A3-9D89-A8D60C727CD7}
+		{B00A29A7-4E3A-4944-90C2-937F065337F1} = {427089B1-F93B-47BC-9C1C-8AB358C13299}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47F57462-0D42-4A9B-9D9A-1A0640BD6135}
