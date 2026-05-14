@@ -40,6 +40,22 @@ builder.Services.AddAuthentication(options =>
         )
     };
 });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("StudentView", policy =>
+        policy.RequireClaim("permission", "Student.View"));
+
+    options.AddPolicy("StudentCreate", policy =>
+        policy.RequireClaim("permission", "Student.Create"));
+
+    options.AddPolicy("StudentUpdate", policy =>
+        policy.RequireClaim("permission", "Student.Update"));
+
+    options.AddPolicy("StudentDelete", policy =>
+        policy.RequireClaim("permission", "Student.Delete"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -63,8 +79,20 @@ using (var scope = app.Services.CreateScope())
     {
         context.Users.AddRange(new Tbl_User[]
         {
-            new Tbl_User { UserName = "admin", Password = "password123", Role = "admin" },
-            new Tbl_User { UserName = "staff", Password = "password123", Role = "staff" }
+            new Tbl_User 
+            { 
+                UserName = "admin", 
+                Password = "123", 
+                Role = "admin", 
+                Permissions = new List<string> { "Student.View", "Student.Create","Student.Update","Student.Delete" } 
+            },
+            new Tbl_User 
+            { 
+                UserName = "staff", 
+                Password = "123", 
+                Role = "staff", 
+                Permissions = new List<string> { "Student.View"} 
+            }
         });
     }
 

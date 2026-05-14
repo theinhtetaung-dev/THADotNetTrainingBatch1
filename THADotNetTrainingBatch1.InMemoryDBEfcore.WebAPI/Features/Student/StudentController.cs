@@ -26,7 +26,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("all")]
-    [Authorize(Roles = "admin,staff")]
+    [Authorize(Policy = "StudentView")]
     public async Task<IActionResult> GetStudents()
     {
         var student = await _service.GetStudents();
@@ -36,7 +36,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("list")]
-    [Authorize(Roles = "admin,staff")]
+    [Authorize(Policy = "StudentView")]
     public async Task<IActionResult> GetStudentList([FromQuery] int pageNo = 1, [FromQuery] int pageSize = 10)
     {
         if (pageNo <= 0 || pageSize <= 0)
@@ -52,7 +52,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize(Policy = "StudentCreate")]
     public async Task<IActionResult> CreateStudent(StudentRequestModel reqmodel)
     {
         var student = await _service.CreateStudent(reqmodel);
@@ -60,7 +60,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize(Roles = "admin,staff")]
+    [Authorize(Policy = "StudentView")]
     public async Task<IActionResult> GetStudentById(int id)
     {
         var student = await _service.GetStudentById(id);
@@ -73,7 +73,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "admin")]
+    [Authorize(Policy = "StudentUpdate")]
     public async Task<IActionResult> UpdateStudent(int id, StudentRequestModel reqmodel)
     {
        var student = await _service.UpdateStudent(id, reqmodel);
@@ -85,7 +85,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "admin")]
+    [Authorize(Policy = "StudentDelete")]
     public async Task<IActionResult> DeleteStudent(int id)
     {
         var isDeleted = await _service.DeleteStudent(id);
