@@ -1,4 +1,5 @@
 ﻿using Serilog;
+using THADotNetTrainingBatch1.SeriLog.ConsoleApp;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -23,7 +24,11 @@ try
         ShowMenu();
 
         Console.Write("Choose option: ");
-        string? input = Console.ReadLine();
+        string? input = Console.ReadLine()!;
+        if(input.IsNullOrEmptyDev())
+        {
+            Console.WriteLine("Input cannot be empty. Please enter a valid option.");
+        }
 
         try
         {
