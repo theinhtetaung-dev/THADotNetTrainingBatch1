@@ -81,6 +81,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THADotNetTrainingBatch1.Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THADotNetTrainingBatch1.Nlog.ConsoleApp", "THADotNetTrainingBatch1.Nlog.ConsoleApp\THADotNetTrainingBatch1.Nlog.ConsoleApp.csproj", "{D3F2FF39-B91F-462A-81CD-098F10BF7DAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THADotNetTrainingBatch1.Ilogger.ConsoleApp", "THADotNetTrainingBatch1.Ilogger.ConsoleApp\THADotNetTrainingBatch1.Ilogger.ConsoleApp.csproj", "{7D86B198-9885-4CEA-9686-B0B8903986BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -215,6 +217,10 @@ Global
 		{D3F2FF39-B91F-462A-81CD-098F10BF7DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3F2FF39-B91F-462A-81CD-098F10BF7DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3F2FF39-B91F-462A-81CD-098F10BF7DAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D86B198-9885-4CEA-9686-B0B8903986BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D86B198-9885-4CEA-9686-B0B8903986BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D86B198-9885-4CEA-9686-B0B8903986BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D86B198-9885-4CEA-9686-B0B8903986BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -252,6 +258,7 @@ Global
 		{09A1A213-F25B-4B1F-9C68-19E6F17A104B} = {384B72C6-E7AC-40A3-9D89-A8D60C727CD7}
 		{B00A29A7-4E3A-4944-90C2-937F065337F1} = {427089B1-F93B-47BC-9C1C-8AB358C13299}
 		{D3F2FF39-B91F-462A-81CD-098F10BF7DAB} = {427089B1-F93B-47BC-9C1C-8AB358C13299}
+		{7D86B198-9885-4CEA-9686-B0B8903986BD} = {427089B1-F93B-47BC-9C1C-8AB358C13299}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47F57462-0D42-4A9B-9D9A-1A0640BD6135}
