@@ -85,6 +85,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THADotNetTrainingBatch1.Ilo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THADotNetTrainingBatch1.Logging.WebAPI", "THADotNetTrainingBatch1.Logging.WebAPI\THADotNetTrainingBatch1.Logging.WebAPI.csproj", "{E883006C-10F5-4F1B-A701-6FA067B5A1A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THADotNetTrainingBatch1.MySql.ConsoleApp", "THADotNetTrainingBatch1.MySql.ConsoleApp\THADotNetTrainingBatch1.MySql.ConsoleApp.csproj", "{F6FDC8D6-01C5-4F87-A83E-E477A8EE1E07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -227,6 +229,10 @@ Global
 		{E883006C-10F5-4F1B-A701-6FA067B5A1A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E883006C-10F5-4F1B-A701-6FA067B5A1A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E883006C-10F5-4F1B-A701-6FA067B5A1A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6FDC8D6-01C5-4F87-A83E-E477A8EE1E07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6FDC8D6-01C5-4F87-A83E-E477A8EE1E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6FDC8D6-01C5-4F87-A83E-E477A8EE1E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FDC8D6-01C5-4F87-A83E-E477A8EE1E07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -266,6 +272,7 @@ Global
 		{D3F2FF39-B91F-462A-81CD-098F10BF7DAB} = {427089B1-F93B-47BC-9C1C-8AB358C13299}
 		{7D86B198-9885-4CEA-9686-B0B8903986BD} = {427089B1-F93B-47BC-9C1C-8AB358C13299}
 		{E883006C-10F5-4F1B-A701-6FA067B5A1A4} = {427089B1-F93B-47BC-9C1C-8AB358C13299}
+		{F6FDC8D6-01C5-4F87-A83E-E477A8EE1E07} = {427089B1-F93B-47BC-9C1C-8AB358C13299}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47F57462-0D42-4A9B-9D9A-1A0640BD6135}

@@ -1,3 +1,5 @@
+
+
 using Serilog;
 
 namespace THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
