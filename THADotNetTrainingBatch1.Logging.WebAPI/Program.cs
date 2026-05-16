@@ -10,6 +10,8 @@ using THADotNetTrainingBatch1.Logging.WebAPI.Services.Auth;
 using THADotNetTrainingBatch1.Logging.WebAPI.Services.Student;
 using THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
 using Serilog;
+using THADotNetTrainingBatch1.Logging.WebAPI.Attributes;
+
 
 
 
@@ -19,12 +21,13 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
-builder.Services.AddSerilog((services, lc) => lc
+builder.Host.UseSerilog((context, services, lc) => lc
     .MinimumLevel.Debug()
     .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
     .Enrich.FromLogContext()
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
     .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day));
+
 
 
 
@@ -71,7 +74,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<LogValidationErrorsFilter>();
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -105,6 +112,9 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -116,7 +126,10 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+app.UseSerilogRequestLogging();
+
 app.UseHttpsRedirection();
+
 
 app.UseAuthentication();
 app.UseAuthorization();

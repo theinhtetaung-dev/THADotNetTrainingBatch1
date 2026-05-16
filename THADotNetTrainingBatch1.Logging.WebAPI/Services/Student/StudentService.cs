@@ -4,10 +4,12 @@ using THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
 using StudentModel = THADotNetTrainingBatch1.Logging.WebAPI.Data.Student;
 namespace THADotNetTrainingBatch1.Logging.WebAPI.Services.Student;
 
+
 public class StudentService : IStudentService
 {
     private readonly AppDbContext _context;
     private readonly ILogService _logService;
+
 
     public StudentService(AppDbContext context,ILogService logService)
     {
@@ -15,6 +17,7 @@ public class StudentService : IStudentService
         _logService = logService;
 
     }
+
 
     public async Task<IEnumerable<StudentResponseModel>> GetAllStudentsAsync()
     {
