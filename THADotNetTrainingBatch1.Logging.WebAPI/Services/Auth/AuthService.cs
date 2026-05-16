@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using THADotNetTrainingBatch1.Logging.WebAPI.Data;
+using THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
 
 namespace THADotNetTrainingBatch1.Logging.WebAPI.Services.Auth;
 
@@ -11,18 +12,28 @@ public class AuthService : IAuthService
 {
     private readonly AppDbContext _context;
     private readonly IConfiguration _configuration;
+    private readonly ILogService _logService;
 
-    public AuthService(AppDbContext context, IConfiguration configuration)
+    public AuthService(AppDbContext context, IConfiguration configuration, ILogService logService)
     {
         _context = context;
         _configuration = configuration;
+        _logService = logService;
     }
 
     public async Task<LoginResponseModel?> LoginAsync(LoginRequestModel request)
     {
-        var users = await _context.Users.ToListAsync();
+        if(string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+        {
+            _logService.LogWarning("Login attempt with empty username or password.");
+            return null;
+        }
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username && u.Password == request.Password);
-        if (user == null) return null;
+        if (user == null)
+        {
+            _logService.LogError($"Login failed for username: {request.Username}");
+            return null;
+        }
 
         var roles = await _context.UserRoles
             .Where(ur => ur.UserId == user.Id)
@@ -74,6 +85,7 @@ public class AuthService : IAuthService
             signingCredentials: creds
         );
 
+        _logService.LogInformation("User logged in successfully: " + user.Username + "With this Psermissions" + Convert.ToString(permissionStrings));
         return new LoginResponseModel
         {
             Token = new JwtSecurityTokenHandler().WriteToken(token),

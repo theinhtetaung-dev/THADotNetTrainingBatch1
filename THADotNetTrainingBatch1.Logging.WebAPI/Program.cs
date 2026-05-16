@@ -8,6 +8,8 @@ using Scalar.AspNetCore;
 using THADotNetTrainingBatch1.Logging.WebAPI.Data;
 using THADotNetTrainingBatch1.Logging.WebAPI.Services.Auth;
 using THADotNetTrainingBatch1.Logging.WebAPI.Services.Student;
+using THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
+using Serilog;
 
 
 
@@ -15,6 +17,16 @@ using THADotNetTrainingBatch1.Logging.WebAPI.Services.Student;
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Serilog
+builder.Services.AddSerilog((services, lc) => lc
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
+    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day));
+
+
 
 
 
@@ -26,6 +38,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Register Services
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ILogService, SeriLogService>();
 
 // Configure JWT
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "YourSecretKeyShouldBeAtLeast32CharsLong!!";
