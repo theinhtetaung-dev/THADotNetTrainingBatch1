@@ -7,7 +7,9 @@ MySqlConnection connection = new MySqlConnection(connectionString);
 try
 {
     connection.Open();
+
     string selectQuery = "SELECT * FROM Tbl_Students";
+
     MySqlCommand selectCmd = new MySqlCommand(selectQuery, connection);
     MySqlDataReader reader = selectCmd.ExecuteReader();
 

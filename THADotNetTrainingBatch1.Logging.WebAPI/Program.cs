@@ -12,25 +12,26 @@ using THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
 using Serilog;
 using THADotNetTrainingBatch1.Logging.WebAPI.Attributes;
 
-
-
-
 // Disable default claim mapping
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure Serilog
-builder.Host.UseSerilog((context, services, lc) => lc
-    .MinimumLevel.Debug()
-    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
-    .Enrich.FromLogContext()
+////Configure Serilog (don't need json )
+//builder.Host.UseSerilog((context, services, lc) => lc
+//   .MinimumLevel.Debug()
+//   .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+//   .Enrich.FromLogContext()
+//   .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
+//   .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day));
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
-    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day));
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
-
-
-
+builder.Host.UseSerilog();
 
 
 // Add services to the container.
@@ -183,12 +184,22 @@ void SeedData(AppDbContext context)
     new Student { StudentName = "Daniel", StudentEmail = "daniel@example.com", StudentAge = 22 }
     );
 
+    // Seed Teachers
+    context.Teachers.AddRange(
+        new Teacher { Name = "Mr. Smith", Age = 45, Email = "smith@school.edu", Address = "123 School Ln" },
+        new Teacher { Name = "Mrs. Johnson", Age = 38, Email = "johnson@school.edu", Address = "456 Education Ave" }
+    );
+
     // Seed Permissions
     var p1 = new Permission { Menu = "Student", Action = "Read" };
     var p2 = new Permission { Menu = "Student", Action = "Create" };
     var p3 = new Permission { Menu = "Student", Action = "Update" };
     var p4 = new Permission { Menu = "Student", Action = "Delete" };
-    context.Permissions.AddRange(p1, p2, p3, p4);
+    var t1 = new Permission { Menu = "Teacher", Action = "Read" };
+    var t2 = new Permission { Menu = "Teacher", Action = "Create" };
+    var t3 = new Permission { Menu = "Teacher", Action = "Update" };
+    var t4 = new Permission { Menu = "Teacher", Action = "Delete" };
+    context.Permissions.AddRange(p1, p2, p3, p4, t1, t2, t3, t4);
 
     // Seed Roles
     var adminRole = new Role { RoleName = "Admin" };
@@ -202,7 +213,12 @@ void SeedData(AppDbContext context)
         new RolePermission { RoleId = adminRole.Id, PermissionId = p2.Id },
         new RolePermission { RoleId = adminRole.Id, PermissionId = p3.Id },
         new RolePermission { RoleId = adminRole.Id, PermissionId = p4.Id },
-        new RolePermission { RoleId = staffRole.Id, PermissionId = p1.Id }
+        new RolePermission { RoleId = adminRole.Id, PermissionId = t1.Id },
+        new RolePermission { RoleId = adminRole.Id, PermissionId = t2.Id },
+        new RolePermission { RoleId = adminRole.Id, PermissionId = t3.Id },
+        new RolePermission { RoleId = adminRole.Id, PermissionId = t4.Id },
+        new RolePermission { RoleId = staffRole.Id, PermissionId = p1.Id },
+        new RolePermission { RoleId = staffRole.Id, PermissionId = t1.Id }
     );
 
     // Users

@@ -54,3 +54,14 @@ public class RolePermission
     public int RoleId { get; set; }
     public int PermissionId { get; set; }
 }
+
+[Table("Tbl_Teacher")]
+public class Teacher
+{
+    [Key]
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public int Age { get; set; }
+    public string Email { get; set; } = null!;
+    public string Address { get; set; } = null!;
+}
