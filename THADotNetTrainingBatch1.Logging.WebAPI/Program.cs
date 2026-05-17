@@ -8,7 +8,7 @@ using Scalar.AspNetCore;
 using THADotNetTrainingBatch1.Logging.WebAPI.Data;
 using THADotNetTrainingBatch1.Logging.WebAPI.Services.Auth;
 using THADotNetTrainingBatch1.Logging.WebAPI.Services.Student;
-using THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
+using THADotNetTrainingBatch1.Logging.WebAPI.Services.Teacher;
 using Serilog;
 using THADotNetTrainingBatch1.Logging.WebAPI.Attributes;
 
@@ -17,21 +17,14 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 var builder = WebApplication.CreateBuilder(args);
 
-////Configure Serilog (don't need json )
-//builder.Host.UseSerilog((context, services, lc) => lc
-//   .MinimumLevel.Debug()
-//   .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
-//   .Enrich.FromLogContext()
-//   .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
-//   .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day));
+//Configure Serilog (don't need json )
+builder.Host.UseSerilog((context, services, lc) => lc
+   .MinimumLevel.Debug()
+   .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+   .Enrich.FromLogContext()
+   .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
+   .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day));
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
-    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
-
-builder.Host.UseSerilog();
 
 
 // Add services to the container.
@@ -41,8 +34,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Register Services
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ILogService, SeriLogService>();
 
 // Configure JWT
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "YourSecretKeyShouldBeAtLeast32CharsLong!!";

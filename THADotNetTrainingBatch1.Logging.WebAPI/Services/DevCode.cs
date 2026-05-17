@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace THADotNetTrainingBatch1.SeriLog.ConsoleApp;
+namespace THADotNetTrainingBatch1.Logging.WebAPI.Services;
 
 public static class DevCode
 {

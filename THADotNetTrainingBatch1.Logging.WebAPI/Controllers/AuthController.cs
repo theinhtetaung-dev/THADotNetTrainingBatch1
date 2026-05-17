@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using THADotNetTrainingBatch1.Logging.WebAPI.Services.Auth;
-using THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
 
 namespace THADotNetTrainingBatch1.Logging.WebAPI.Controllers;
 
@@ -9,9 +8,9 @@ namespace THADotNetTrainingBatch1.Logging.WebAPI.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-    private readonly ILogService _logService;
+    private readonly ILogger<AuthController> _logService;
 
-    public AuthController(IAuthService authService, ILogService logService)
+    public AuthController(IAuthService authService, ILogger<AuthController> logService)
     {
         _authService = authService;
         _logService = logService;

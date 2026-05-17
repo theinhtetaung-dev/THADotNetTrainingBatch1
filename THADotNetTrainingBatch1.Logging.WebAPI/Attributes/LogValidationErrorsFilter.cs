@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
 
 namespace THADotNetTrainingBatch1.Logging.WebAPI.Attributes;
 
 public class LogValidationErrorsFilter : IActionFilter
 {
-    private readonly ILogService _logService;
+    private readonly ILogger<LogValidationErrorsFilter> _logService;
 
-    public LogValidationErrorsFilter(ILogService logService)
+    public LogValidationErrorsFilter(ILogger<LogValidationErrorsFilter> logService)
     {
         _logService = logService;
     }

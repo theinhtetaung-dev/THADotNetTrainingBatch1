@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using THADotNetTrainingBatch1.Logging.WebAPI.Data;
-using THADotNetTrainingBatch1.Logging.WebAPI.Services.Logging;
 
 namespace THADotNetTrainingBatch1.Logging.WebAPI.Services.Auth;
 
@@ -12,9 +11,9 @@ public class AuthService : IAuthService
 {
     private readonly AppDbContext _context;
     private readonly IConfiguration _configuration;
-    private readonly ILogService _logService;
+    private readonly ILogger<AuthService> _logService;
 
-    public AuthService(AppDbContext context, IConfiguration configuration, ILogService logService)
+    public AuthService(AppDbContext context, IConfiguration configuration, ILogger<AuthService> logService)
     {
         _context = context;
         _configuration = configuration;
